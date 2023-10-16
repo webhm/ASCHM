@@ -1,0 +1,277 @@
+﻿@model List<Solicitud>
+@{
+    ViewData["Title"] = "Solicitud";
+}
+
+@section Styles{
+    <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css" rel="stylesheet" />
+}
+
+<br />
+
+<div class="container-fluid" style="padding: 30px;">
+    <div>
+        <br />
+        <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+            <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+            </symbol>
+            <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+            </symbol>
+            <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+            </symbol>
+        </svg>
+
+        @if (@TempData["AlertAutorizar"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill" /></svg>
+                <strong> Operación Existosa: </strong>@TempData["AlertAutorizar"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        @if (@TempData["AlertRechazar"] != null)
+        {
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill" /></svg>
+                <strong>Operación Existosa: </strong>@TempData["AlertRechazar"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }        
+
+        @if (@TempData["AlertError"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill" /></svg>
+                <strong>Error: </strong>@TempData["AlertError"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        <br />
+    </div>
+
+    <div>
+        <div class="solicitudes">
+            <div class="card customShadow">
+                <div class="card-header" style="background-color: #D5D5D5;">
+                    <div class="text-center">
+                        <h1 class="card-title" style="color: #002F5F"><b>Solicitudes Pendientes</b></h1>
+                    </div>
+
+                </div>
+                <div class="card-body">                                       
+                    <table id="sp" class="display" style="width:100%; color: #002F5F">
+                        <caption><b>Detalle de Solicitudes Pendientes</b></caption>
+                        <thead>
+                            <tr>
+                                <th></th>                               
+                                <th class="text-center text-nowrap">Nº Solicitud</th>
+                                <th class="text-center text-nowrap">Fecha</th>
+                                <th class="text-center text-nowrap">Solicitante</th>
+                                <th class="text-center text-nowrap">Cod </th>
+                                <th class="text-center text-nowrap">Sector</th>
+                                <th class="text-center text-nowrap">Observación</th>
+                                <th class="text-center text-nowrap">Ver Solicitud</th>
+                                <th class="text-center text-nowrap">Ver Datos Adjuntos</th>
+                                <th class="text-center text-nowrap">Acciones</th>                              
+                            </tr>
+                        </thead>
+                        <tbody>  
+                            @if(Model is not null)
+                            {
+                                @foreach (var solicitud in Model)
+                                {
+                                    <tr>
+                                        <td></td>
+                                        <td class="text-center text-nowrap">@solicitud.Id</td>
+                                        <td class="text-center text-nowrap">@solicitud.Fecha</td>
+                                        <td class="text-center text-nowrap">@solicitud.Solicitante</td>
+                                        <td class="text-center text-nowrap">@solicitud.Cod</td>
+                                        <td class="text-center text-nowrap">@solicitud.Sector</td>
+                                        <td style="text-align: justify">@solicitud.Observacion</td>
+                                        <td class="text-center text-nowrap">
+                                            <a href="@solicitud.UrlSolicitud" target="_blank" style=" color: #002F5F;">
+                                                <i class="fa-solid fa-link"></i>
+                                            </a>
+                                        </td>
+                                        <td class="text-center text-nowrap">
+                                            <a href="@solicitud.UrlDatoAdj" target="_blank" style=" color: #002F5F;">
+                                                <i class="fa-solid fa-file-pdf fa-xl"></i>
+                                            </a>
+                                        </td>
+                                        <td class="text-center text-nowrap">
+                                            <button type="button" class="btn btn-outline-success btn-sm" onclick="mostrarConfirm('autorizar', @solicitud.Id, @solicitud.Nivel, '@solicitud.UsuarioAutorizador')">Autorizar</button>
+                                            <button type="button" class="btn btn-outline-danger btn-sm" onclick="mostrarConfirm('rechazar', @solicitud.Id, @solicitud.Nivel, '@solicitud.UsuarioAutorizador')">Cancelar</button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            
+                                                     
+                        </tbody>
+                    </table>
+
+                    <!-- Confirm para Autorizar -->
+                    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="confirmModalLabel">Confirmar Acción</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body" id="modalBody">
+                                    <!-- El contenido del modal será reemplazado con los campos de autorización o rechazo -->
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="button" class="btn btn-primary btn-sm" onclick="confirmarAccion()">Confirmar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+                <div class="card-footer">                   
+                    <a asp-action="VerHis" asp-controller="Home" class="btn btn-outline-primary font-weight-bold gradient-custom text-white">
+                        <b>Ver Historial</b>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+
+@section Scripts{   
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
+    
+    <script type="text/javascript">
+        function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 10);
+        window.onunload = function () { null };
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#sp').DataTable({
+                "language": {
+                    url: "https://cdn.datatables.net/plug-ins/1.12.1/i18n/es-ES.json",
+                    info: '',
+                    infoEmpty: '',
+                    infoFiltered: '',
+                },
+                responsive: true,
+                "autoWidth": true,
+                ordering: false,
+            });            
+        });        
+    </script>
+
+    <script>
+        function mostrarConfirm(accion, id, nivel, usuario) {
+            var modalBody = document.getElementById('modalBody');
+            if (accion === 'autorizar') {
+                // Modal para autorizar
+                var contenido = `¿Estás seguro de que deseas autorizar la Solicitud Nº: ${id}?`;
+                modalBody.innerHTML = contenido;
+            } else if (accion === 'rechazar') {
+                // Modal para rechazar
+                var contenido = `
+                    <div class="mb-3">
+                        ¿Estás seguro de que deseas cancelar la Solicitud Nº: ${id}?
+                    </div>
+                    <div class="mb-3">
+                      <label for="opcionSelect" class="form-label">Motivo:</label>
+                              <select class="form-control" id="filtroOpciones"><option disabled selected>Seleccionar motivo</option></select>
+                    </div>
+                    <div class="mb-3">
+                      <label for="motivoInput" class="form-label">Observación:</label>
+                      <input type="text" class="form-control" id="motivoInput">
+                    </div>`;
+
+                modalBody.innerHTML = contenido;
+
+                // Agregar las opciones dinámicas al select
+                var selectOpciones = document.getElementById('filtroOpciones');
+                var opcionesJSON = '@Html.Raw(ViewBag.OpcionesJSON)'; // Obtener la lista de opciones en formato JSON desde ViewBag
+                var opciones = JSON.parse(opcionesJSON);
+                opciones.forEach(function (opcion) {
+                    var option = document.createElement('option');
+                    option.value = opcion.Value;
+                    option.text = opcion.Text;
+                    selectOpciones.appendChild(option);
+                });
+            }
+
+            $('#confirmModal').modal('show');
+            // Agregamos atributos data para acceder a la acción, el ID, nivel y usuario desde el botón "Confirmar"
+            $('#confirmModal .btn-primary').attr('data-accion', accion);
+            $('#confirmModal .btn-primary').attr('data-id', id);
+            $('#confirmModal .btn-primary').attr('data-nivel', nivel);
+            $('#confirmModal .btn-primary').attr('data-usuario', usuario);
+        }
+
+        function confirmarAccion() {
+            var accion = $('#confirmModal .btn-primary').attr('data-accion');
+            var id = $('#confirmModal .btn-primary').attr('data-id');
+            var nivel = $('#confirmModal .btn-primary').attr('data-nivel');
+            var usuario = $('#confirmModal .btn-primary').attr('data-usuario');
+
+            if (accion === 'autorizar') {
+                // Realizamos una llamada AJAX para autorizar el elemento con el ID
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("Autorizar", "Home")',
+                    data: { id: id, nivel: nivel, usuario: usuario },
+                    success: function (response) {
+                        // Redirigimos a la misma vista después de autorizar
+                        window.location.href = '@Url.Action("AutorizarCompletado", "Home")';
+                    },
+                    error: function (error) {
+                        // Manejo de errores
+                    }
+                });
+            } else if (accion === 'rechazar') {
+                var opcionSeleccionada = $('#filtroOpciones').val();
+                var motivo = $('#motivoInput').val();
+
+                // Validamos que se haya seleccionado una opción, que el motivo no esté vacío y que el nivel y el usuario se hayan proporcionado
+                if (opcionSeleccionada && motivo.trim() !== '' && nivel !== '' && usuario.trim() !== '') {
+                    // Realizamos una llamada AJAX para rechazar el elemento con la opción, el motivo, nivel y usuario
+                    $.ajax({
+                        type: 'GET',
+                        url: '@Url.Action("Rechazar", "Home")',
+                        data: { id: id, opcion: opcionSeleccionada, motivo: motivo, nivel: nivel, usuario: usuario },
+                        success: function (response) {
+                            // Redirigimos a la misma vista después de rechazar
+                            window.location.href = '@Url.Action("RechazarCompletado", "Home")';
+                        },
+                        error: function (error) {
+                            // Manejo de errores
+                        }
+                    });
+                } else {
+                    // Mostramos mensaje de error si no se cumple con los requisitos
+                    alert('Debes seleccionar el motivo y proporcionar una observación para continuar con la cancelación.');
+                }
+
+                // Restablecemos el valor del campo de texto después de seleccionar una opción
+                $('#filtroOpciones').val('');
+            }
+
+            // Cerramos el modal después de la confirmación
+            $('#confirmModal').modal('hide');
+        }
+    </script>
+}
+

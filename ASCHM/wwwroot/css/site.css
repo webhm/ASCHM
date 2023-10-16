@@ -1,0 +1,107 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    margin: 0px;
+    font-family: sans-serif;
+    min-height: 100vh;
+    position: relative;
+}
+
+footer {
+    
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    
+}
+
+.imgLogoMV {
+    width: 200px;
+    /*padding: 10px 10px 10px 10px;*/
+}
+
+.imgLogoHM {
+    width: 300px;
+    padding: 10px 10px 10px 10px;
+}
+
+.image1 {
+    width: 20%;
+}
+
+.image2 {
+    width: 45%;
+}
+
+.image3 {
+    width: 25%;
+}
+
+.imgSalir {
+    width: 18px;
+}
+
+.imgIcon {
+    filter: invert(16%) sepia(16%) saturate(7214%) hue-rotate(190deg) brightness(91%) contrast(105%);
+}
+
+.gradient-custom {
+    background: rgb(0,47,95);
+    background: linear-gradient(90deg, rgba(0,47,95,1) 0%, rgba(0,91,187,1) 50%, rgba(0,159,218,1) 100%);
+}
+
+.gradient-navbar {
+    background: rgb(0,47,95);
+    background: linear-gradient(90deg, rgba(0,47,95,1) 0%, rgba(0,91,187,1) 50%, rgba(0,159,218,1) 100%);
+}
+
+.gradient-logout {
+    background: rgb(120,35,39);
+    background: radial-gradient(circle, rgba(120,35,39,1) 0%, rgba(205,32,44,1) 100%);
+}
+
+.logo {
+    margin: 10px;
+}
+
+.customShadow {
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+
+.customShadowNav {
+    box-shadow: 0px 8px 5px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 0px 8px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 8px 5px 0px rgba(0,0,0,0.75);
+}
+
+.customShadowForm {
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+
+.customShadowFooter {
+    box-shadow: 0px -4px 7px 1px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 0px -4px 7px 1px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px -4px 7px 1px rgba(0,0,0,0.5);
+}
+
+.gradient-custom {
+    background: rgb(0,47,95);
+    background: linear-gradient(90deg, rgba(0,47,95,1) 0%, rgba(0,91,187,1) 50%, rgba(0,159,218,1) 100%);
+}

@@ -1,0 +1,31 @@
+﻿@using System.Security.Principal
+
+<ul class="navbar-nav">
+@if (User.Identity?.IsAuthenticated == true)
+{        
+        <span class="navbar-text" style=" color: #002F5F; padding-right: 40px;">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" aria-expanded="false" style=" color: #002F5F;" data-bs-toggle="dropdown">                        
+                        <i class="fas fa-user me-1"></i>
+                        <b>@User.Identity?.Name</b>
+                    </a>
+                    <ul class="dropdown-menu text-center" aria-labelledby="navbarDropdown">                    
+                        <li>
+                            <a class="dropdown-item" style=" color: #002F5F;" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignOut">
+                                Cerrar Sesión
+                            </a>
+                        </li>
+                    </ul>
+
+                </li>
+            </ul>
+        </span>
+}
+else
+{
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignIn">Iniciar Sesión</a>
+        </li>
+}
+</ul>
